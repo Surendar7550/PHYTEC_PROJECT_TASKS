@@ -1,0 +1,8 @@
+#ifndef SERVER_H
+#define SERVER_H
+
+#define BUF_SIZE 1024
+
+void error(const char *msg);
+
+#endif
