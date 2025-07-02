@@ -1,80 +1,55 @@
 #include <stdio.h>
+#include <stdlib.h>
 #define SIZE 5
 
-typedef struct {
-    int items[SIZE];
-    int front;
-    int rear;
-} Queue;
+int queue[SIZE];
+int front = -1, rear = -1;
 
-// Initialize queue
-void initQueue(Queue *q) {
-    q->front = 0;
-    q->rear = -1;
-}
-
-// Check if queue is empty
-int isEmpty(Queue *q) {
-    return q->front > q->rear;
-}
-
-// Check if queue is full
-int isFull(Queue *q) {
-    return q->rear == SIZE - 1;
-}
-
-// Enqueue
-void enqueue(Queue *q, int value) {
-    if (isFull(q)) {
-        printf("Queue is full!\n");
-    } else {
-        q->rear++;
-        q->items[q->rear] = value;
-        printf("Enqueued: %d\n", value);
+void enqueue(int value) {
+    if (rear == SIZE - 1)
+        printf("Queue is full (Overflow)!\n");
+    else {
+        if (front == -1)
+            front = 0;
+        rear++;
+        queue[rear] = value;
+        printf("Inserted %d\n", value);
     }
 }
 
-// Dequeue
-int dequeue(Queue *q) {
-    if (isEmpty(q)) {
-        printf("Queue is empty!\n");
-        return -1;
-    } else {
-        int value = q->items[q->front];
-        q->front++;
-        printf("Dequeued: %d\n", value);
-        return value;
+void dequeue() {
+    if (front == -1 || front > rear)
+        printf("Queue is empty (Underflow)!\n");
+    else {
+        printf("Deleted: %d\n", queue[front]);
+        front++;
     }
 }
 
-// Display
-void display(Queue *q) {
-    if (isEmpty(q)) {
+void display() {
+    if (front == -1 || front > rear)
         printf("Queue is empty!\n");
-    } else {
-        printf("Queue: ");
-        for (int i = q->front; i <= q->rear; i++) {
-            printf("%d ", q->items[i]);
-        }
+    else {
+        printf("Queue elements: ");
+        for (int i = front; i <= rear; i++)
+            printf("%d ", queue[i]);
         printf("\n");
     }
 }
 
 int main() {
-    Queue q;
-    initQueue(&q);
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    display();
 
-    enqueue(&q, 10);
-    enqueue(&q, 20);
-    enqueue(&q, 30);
-    display(&q);
+    dequeue();
+    display();
 
-    dequeue(&q);
-    display(&q);
-
-    dequeue(&q);
-    dequeue(&q);
-    dequeue(&q); // Should say empty
+    dequeue();
+    dequeue();
+    dequeue(); // Underflow
 
     return 0;
 }
+
