@@ -1,3 +1,17 @@
+/*
+ * circular_buffer.c
+ *
+ * Simple Circular Buffer implementation in C.
+ *
+ * Features:
+ *  - Enqueue and Dequeue operations
+ *  - Check if buffer is full or empty
+ *  - Display buffer contents
+ *
+ * Author: Surendar.k
+ * GitHub: https://github.com/Surendar7550/PHYTEC_PROJECT_TASKS/edit/main/WEEK_1/CODE/Circular_Buffer.c
+ */
+
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -15,6 +29,7 @@ void initBuffer(CircularBuffer *cb) {
     cb->head = 0;
     cb->tail = 0;
     cb->count = 0;
+    printf("Circular Buffer Initialized.\n");
 }
 
 // Check if buffer is empty
@@ -92,3 +107,19 @@ int main() {
 
     return 0;
 }
+/* OUTPUT
+* Circular Buffer Initialized.
+* Enqueued: 10
+* Enqueued: 20
+* Enqueued: 30
+* Enqueued: 40
+* Enqueued: 50
+* Buffer contents: 10 20 30 40 50 
+* Buffer is full! Cannot enqueue 60
+* Dequeued: 10
+* Dequeued: 20
+* Buffer contents: 30 40 50 
+* Enqueued: 60
+* Enqueued: 70
+* Buffer contents: 30 40 50 60 70 
+*/
