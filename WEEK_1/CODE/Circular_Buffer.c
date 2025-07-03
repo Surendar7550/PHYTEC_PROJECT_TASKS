@@ -107,7 +107,10 @@ int main() {
 
     return 0;
 }
-/* OUTPUT
+/* 
+*  === EXPECTED OUTPUT ===
+*
+*
 * Circular Buffer Initialized.
 * Enqueued: 10
 * Enqueued: 20
