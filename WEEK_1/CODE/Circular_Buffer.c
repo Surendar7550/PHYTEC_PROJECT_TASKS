@@ -9,7 +9,7 @@
  *  - Display buffer contents
  *
  * Author: Surendar.k
- * GitHub: https://github.com/Surendar7550/PHYTEC_PROJECT_TASKS/edit/main/WEEK_1/CODE/Circular_Buffer.c
+ * GitHub: https://github.com/Surendar7550/PHYTEC_PROJECT_TASKS/WEEK_1/CODE/Circular_Buffer.c
  */
 
 #include <stdio.h>
