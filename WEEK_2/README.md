@@ -1,2 +1,1 @@
-
-file:///home/surendar/git/PHYTEC_PROJECT_TASKS/WEEK_2/tree_structure.png
+![tree_structure](https://github.com/user-attachments/assets/91361ccf-6710-44a9-bb6c-64ea50950723)
