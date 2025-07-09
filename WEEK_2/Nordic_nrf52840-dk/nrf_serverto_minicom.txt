@@ -1,0 +1,30 @@
+1. Set Up Network Topology
+You'll need:
+
+1 Border Router (nRF52840 DK)
+
+1 CoAP Server (nRF52840 DK)
+
+1 CoAP Client (nRF52840 DK)
+
+2. Build and Flash Border Router
+cd ~/contiki-ng/examples/rpl-border-router
+make TARGET=nrf52840 BOARD=dk
+make border-router.upload
+
+make login 	 	
+
+3. Build and Flash CoAP Server
+
+cd ~/contiki-ng/examples/coap-client
+# Edit project-conf.h to set server address
+echo "#define COAP_SERVER_ADDR \"aaaa::c30c:0:0:1234\"" > project-conf.h
+make TARGET=nrf52840 BOARD=dk
+make coap-client.upload
+
+5. Test Communication
+1.Monitor server output:
+	make login -C ~/contiki-ng/examples/coap-server
+	
+2.Monitor client output:
+	make login -C ~/contiki-ng/examples/coap-client

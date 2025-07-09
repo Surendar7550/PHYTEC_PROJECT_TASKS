@@ -1,0 +1,60 @@
+What you need
+
+| Requirement         | Notes                                           |
+| ------------------- | ----------------------------------------------- |
+|  **Board**          | Nordic nRF52840-DK                              |
+|  **Toolchain**      | `arm-none-eabi-gcc`                             |
+|  **Flashing tool**  | `nrfjprog` (part of the nRF Command Line Tools) |
+|  **Contiki-NG**     | Latest clone                                    |
+
+make TARGET=nrf52dk blink-hello.flash
+
+TOOL CHAIN :
+Install development :
+	sudo apt update
+	sudo apt install build-essential doxygen git curl wireshark python3-serial srecord rlwrap
+	sudo usermod -a -G wireshark Surendar
+Install ARM compiler:
+	wget https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2020q2/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2
+	tar -xjf gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2
+
+	-> gcc-arm-none-eabi-9-2020-q2-update/
+	vi ~/.bashrc
+	echo 'export PATH=$PATH:/home/surendar/contiki-ng/gcc-arm-none-eabi-9-2020-q2-update/bin' //give your location
+	source ~/.bashrc
+Port Features
+The following features have been implemented:
+
+Support for the 802.15.4 mode of the radio, including IPv6 using 6LoWPAN
+
+Support for both TSCH and CSMA
+
+No dependency on the SoftDevice
+
+Contiki-NG system clock and rtimers
+
+UART driver
+
+Watchdog driver
+
+RNG driver seeded from the hardware RNG
+
+Temperature sensor driver
+
+DK/Dongle LED and Button driver
+
+Bootloader and DFU upload support
+
+Real Time Transfer (RTT) I/O support
+
+Native USB support
+
+Note that this port does not support BLE.
+
+The port is organized as follows:
+
+ 	nRF52840 CPU drivers are located in the arch/cpu/nrf52840 folder.
+
+	The nRF52 SDK is located in the arch/cpu/nrf52840/lib/nrf52-sdk folder. This will be installed automatically as a git submodule.
+
+	nRF52 DK and Dongle drivers are located in the arch/platform/nrf52840 folder.

@@ -1,0 +1,56 @@
+mkdir ~/contiki-ng/examples/my_leds
+cd ~/contiki-ng/examples/my_leds
+
+
+my_leds.c
+#include "contiki.h"
+#include "dev/leds.h"
+
+PROCESS(led_process, "LED Example");
+AUTOSTART_PROCESSES(&led_process);
+
+PROCESS_THREAD(led_process, ev, data)
+{
+  static struct etimer timer;
+  PROCESS_BEGIN();
+  
+  etimer_set(&timer, CLOCK_SECOND); // 1 second timer
+  
+  while(1) {
+    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
+    leds_toggle(LEDS_ALL);          // Toggle all LEDs
+    etimer_reset(&timer);
+  }
+  PROCESS_END();
+}
+
+
+Makefile
+CONTIKI = ../..
+TARGET = nrf52840
+BOARD = dk
+
+all: my_leds
+
+include $(CONTIKI)/Makefile.include
+
+
+compile & flash
+make
+# Flash to device (requires J-Link)
+make my_leds.upload
+
+
+led map
+// ~/contiki-ng/arch/platform/nrf52840/dk/board-leds.c
+#define LEDS_GPIO_PIN_MAP { GPIO_PIN_MAP(0,13), \
+                            GPIO_PIN_MAP(0,14), \
+                            GPIO_PIN_MAP(0,15), \
+                            GPIO_PIN_MAP(0,16) }
+                            
+                            
+                            
+# Erase chip first
+nrfjprog -f nrf52 --eraseall
+# Then flash again
+make my_leds.upload
