@@ -1,3 +1,18 @@
+/*
+ * state_machine.c
+ *
+ * Simple Event-Driven State Machine implementation in C.
+ *
+ * Features:
+ *  - States: IDLE, RECEIVING, PROCESSING, SENDING_ACK
+ *  - Events: Start message, receive bytes, process result, send ACK
+ *  - Buffer for storing received bytes
+ *  - Validates message (must start with "HELLO")
+ *
+ * Author: Surendar.k
+ * GitHub: https://github.com/Surendar7550/PHYTEC_PROJECT_TASKS//WEEK_1/CODE/State_machine.c
+ */
+
 #include <stdio.h>
 #include <string.h>
 
@@ -34,14 +49,14 @@ void init_buffer() {
     buffer_pos = 0;
 }
 
-// Simulate storing a byte
+// Store incoming byte into buffer
 void store_byte(char byte) {
     if (buffer_pos < MAX_MSG_LEN - 1) {
         buffer[buffer_pos++] = byte;
     }
 }
 
-// Validate message (e.g., must start with "HELLO")
+// Validate message content (e.g., must start with "HELLO")
 int validate_message() {
     if (strncmp(buffer, "HELLO", 5) == 0) {
         printf("Message validated: %s\n", buffer);
@@ -57,12 +72,12 @@ void prepare_ack() {
     printf("Sending: ACK\\n\n");
 }
 
-// Log error
+// Log error if validation fails
 void log_error() {
     printf("Error: Invalid message!\n");
 }
 
-// === Event handler ===
+// === State Machine Event Handler ===
 void handle_event(Event event, char byte) {
     switch (current_state) {
         case IDLE:
@@ -111,9 +126,9 @@ void handle_event(Event event, char byte) {
     }
 }
 
-// === Simulate incoming bytes ===
+// === Simulate Receiving Message ===
 void simulate_receive(const char *msg) {
-    handle_event(EVENT_MSG_START, 0); // Start message
+    handle_event(EVENT_MSG_START, 0); // Start new message
     for (int i = 0; msg[i] != '\0'; i++) {
         handle_event(EVENT_BYTE_RECEIVED, msg[i]);
     }
@@ -121,13 +136,27 @@ void simulate_receive(const char *msg) {
 
 // === Main ===
 int main() {
-    printf("=== Simple Event-driven State Machine ===\n");
+    printf("=== Simple Event-Driven State Machine ===\n");
 
-    // Valid message
+    // Test with valid message
     simulate_receive("HELLO\n");
 
-    // Invalid message
+    // Test with invalid message
     simulate_receive("BYE\n");
 
     return 0;
 }
+
+/*
+ * === EXPECTED OUTPUT ===
+ *
+ * === Simple Event-Driven State Machine ===
+ * IDLE -> RECEIVING
+ * Message validated: HELLO
+ * PROCESSING -> SENDING_ACK
+ * Sending: ACK\n
+ * SENDING_ACK -> IDLE
+ * IDLE -> RECEIVING
+ * Invalid message: BYE
+ * Error: Invalid message!
+ */
